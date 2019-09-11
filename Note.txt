@@ -1,0 +1,244 @@
+https://github.com/jaketrent
+https://app.pluralsight.com/library/courses/react-styling-components/table-of-contents
+
+http://localhost:3000/
+
+C:\react\react-drift-master>npm install
+C:\react\react-drift-master>npm start
+
+
+Chapter 2: Inline Styles
+=========================================
+christopher chedeau
+speakerdeck.com/vjeux/react-css-in-js
+
+Can do:
+Global Namespace
+Dependencies
+Dead Code Elimination
+Minification
+Sharing Constants
+Non-deterministic Resolution
+Isolation
+
+Cannot do:
+Media Queries
+Pseudo Selectors
+Keyframe Animations
+
+
+Chapter 3: Radium
+=========================================
+radium = inlineStyles++
+
+radium = inlineStyles + mediaQueries + pseudoSelectors + keyframes
+
+Radium(<MyComponent/>)
+Image slider
+- Again, unstyled
+Radium styles
+- A few more features
+
+C:\react\react-drift-master>npm install radium --save-dev
+C:\react\react-drift-master>npm uninstall radium --save-dev
+C:\react\react-drift-master>npm install radium@0.14.3 --save-dev
+
+Can do:
+Global Namespace
+Dependencies
+Dead Code Elimination
+Minification
+Sharing Constants
+Non-deterministic Resolution
+Isolation
+Media Queries
+Pseudo Selectors
+Keyframe Animations
+
+
+Chapter 4: A Webpack Intro for CSS
+=========================================
+webpack.config.js
+webpack.config.dev.js
+
+
+module.exports = {			<< Itself, just a js module
+    entry: [’./filenames.js’],		<< Your app starting point(s) for tracing dependencies
+    output: {				<< Location of final output
+        path: ‘/a-directory’,
+        filename: ‘my-bundle.js’,
+        publicPath: ‘/app-path’
+    },
+    module: {				<< Unix pipe-like transforms for loading different types of modules
+        loaders: [{
+            test: /file-regex/,
+            loaders: [‘transforms…’]
+        }]
+    }
+}
+
+Loaders are like Unix pipes
+transform 1		transform 2 		transform 3
+find 		| 	cat 		| 	grep
+
+
+C:\react\react-drift-master>npm install style-loader@0.13.0 --save-dev
+C:\react\react-drift-master>npm install css-loader@0.22.0 cssnext-loader@1.0.1 --save-dev
+
+last      <---        first
+[‘style’, ‘css’, ‘cssnext’]
+
+
+Chapter 5: CSS Stylesheet
+=========================================
+Webpack Allows:
+import css from ‘my-stylesheet.css’
+
+.normal-selectors {
+	text-align: left;
+	border: 1px solid professorPlum;
+}
+
+Image slider
+- Again, unstyled
+Vanilla CSS
+- What you’re used to
+- Imported via Webpack
+
+BEM
+(block, element, modifier)
+.block__element__modifier
+
+Project Prefix
+.dft__*
+
+C:\react\react-drift-master>npm install classnames@2.2.0 --save-dev
+
+
+Chapter 6: CSS Modules
+=========================================
+C:\react\react-drift-master>npm install react-styleable@2.0.0 --save-dev
+
+CSS Modules are awesome!
+Traditional <<>> CSS Real Modules
+
+:before {}
+@media (min-width: 700px) {}
+@keyframes animate {}
+
+webpack.config.dev.js
+{
+      test: /\.css/,
+      loaders: ['style', 'css?modules&localIdentName=[local]---[hash:base64:5]', 'cssnext']
+    }
+
+
+SRC					COMPILED
+.link {					.link———5x98a {			<<< ———5x98a is the localIdentName
+    text-decoration: none;		    text-decoration: none;
+}					}
+.btn {					.btn———99a0f {
+    border: none;			    border: none;
+    background: orange;			    background: orange;
+}					}
+
+-----
+
+SRC
+import css from ‘./my-stylesheet.css’
+function MyComponent() {
+	return <button className={css.btn}>Push</button>
+}
+IN-BROWSER
+<button class=“btn———99a0f”>Push</button>
+
+
+localIdentName=[local]---[hash:base64:5]
+local: 		Your selector name
+hash:base64:5:	Generated hash (substring 5 chars)
+
+
+-----
+
+.selector {
+composes: anotherSelector;
+}
+
+default-links.css
+.link {
+	color: orange;
+}
+
+my-component.css
+.link {
+	composes: link from “./default-links.css”;
+	color: pink;
+}
+
+
+react-styleable
+import css from ‘./stylesheet.css’
+<button className={ ??? }>Push</button>
+
+MyComponent.propTypes = {
+    css: object.isRequired
+}
+<MyComponent css={{
+    originalSelector: props.css.myAppStyle
+}} />
+<MyComponent css={{
+    originalSelector: ‘textFixtureClassName’
+}} />
+
+
+Image slider
+- Again, unstyled
+CSS Modules
+- Will write CSS
+- Usage will feel different
+
+
+CSS Modules
+Local by default
+	.selectorName
+Can make global
+	html
+	:global(.selectorName)
+
+
+CSS Modules!
+- Codebase longevity
+- Refactoring
+- Selector names
+- Real module isolation
+
+Can do:
+Global Namespace
+Dependencies
+Dead Code Elimination
+Minification
+Non-deterministic Resolution
+Isolation
+
+Cannot do:
+Sharing Constants
+
+Way to styling...
+1. Inline Styles
+2. Radium
+3. External CSS Stylesheet
+4. CSS Modules
+
+
+
+
+
+
+
+
+
+
+
+
+
+
